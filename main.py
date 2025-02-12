@@ -11,7 +11,11 @@ app = FastAPI()
 
 # Load data
 file_path = "Medicine_Details.csv"  # Ensure this file is available in your deployment
-meds = pd.read_csv(file_path)
+# Load only required columns
+useful_columns = ['Medicine Name', 'Composition', 'Uses', 'Manufacturer', 
+                  'Excellent Review %', 'Average Review %', 'Poor Review %']
+
+meds = pd.read_csv(file_path, usecols=useful_columns)
 
 # Preprocess data
 meds = meds[['Medicine Name', 'Composition', 'Uses', 'Manufacturer', 'Excellent Review %', 'Average Review %', 'Poor Review %']]
@@ -29,7 +33,7 @@ meds['tags'] = meds['Composition'] + meds['Uses']
 meds['tags'] = meds['tags'].apply(lambda x: ' '.join(x).lower())
 
 # Feature Vectorization
-cv = CountVectorizer(max_features=5000, stop_words='english')
+cv = CountVectorizer(max_features=2000, stop_words='english')
 vector = cv.fit_transform(meds['tags']).toarray()
 similarity = cosine_similarity(vector)
 
