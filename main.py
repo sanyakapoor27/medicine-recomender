@@ -5,6 +5,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from nltk.stem.porter import PorterStemmer
 import uvicorn
+import os 
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -81,6 +82,8 @@ def get_recommendation_by_use(use: str):
     use_query = use.split(",")
     return recommend_by_use(use_query)
 
-# Run the FastAPI app (for local testing)
+port = int(os.getenv("PORT", 10000))
+
+# Run the FastAPI app
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=10000)
+    uvicorn.run(app, host="0.0.0.0", port=port)
