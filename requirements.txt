@@ -1,6 +1,6 @@
 fastapi
 uvicorn
-pandas
+dask
 numpy
 scikit-learn
 nltk
