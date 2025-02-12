@@ -4,3 +4,4 @@ dask
 numpy
 scikit-learn
 nltk
+pandas
