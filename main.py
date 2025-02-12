@@ -15,11 +15,14 @@ file_path = "Medicine_Details.csv"  # Ensure this file is available in your depl
 useful_columns = ['Medicine Name', 'Composition', 'Uses', 'Manufacturer', 
                   'Excellent Review %', 'Average Review %', 'Poor Review %']
 
-meds = dd.read_csv(file_path, usecols=useful_columns).compute()
+meds = dd.read_csv(file_path, usecols=useful_columns, nrows=5000).compute()
 
 # Preprocess data
 meds = meds[['Medicine Name', 'Composition', 'Uses', 'Manufacturer', 'Excellent Review %', 'Average Review %', 'Poor Review %']]
 meds.drop_duplicates(inplace=True)
+meds['Excellent Review %'] = meds['Excellent Review %'].astype('float32')
+meds['Average Review %'] = meds['Average Review %'].astype('float32')
+meds['Poor Review %'] = meds['Poor Review %'].astype('float32')
 
 # Convert Composition and Uses columns to lists
 meds['Composition'] = meds['Composition'].apply(lambda x: [i.strip().replace(" ", "") for i in x.split(' + ')])
