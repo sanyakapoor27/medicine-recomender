@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException
-import dask.dataframe as dd
+import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -16,7 +16,7 @@ file_path = "Medicine_Details.csv"  # Ensure this file is available in your depl
 useful_columns = ['Medicine Name', 'Composition', 'Uses', 'Manufacturer', 
                   'Excellent Review %', 'Average Review %', 'Poor Review %']
 
-meds = dd.read_csv(file_path, usecols=useful_columns, nrows=5000).compute()
+meds = pd.read_csv(file_path, usecols=useful_columns, nrows=5000).compute()
 
 # Preprocess data
 meds = meds[['Medicine Name', 'Composition', 'Uses', 'Manufacturer', 'Excellent Review %', 'Average Review %', 'Poor Review %']]
